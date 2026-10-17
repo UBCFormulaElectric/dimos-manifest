@@ -1,0 +1,48 @@
+header:
+  version: 23
+
+defaults:
+  repos:
+    branch: wrynose
+
+distro: nodistro
+machine: jetson-orin-nano-devkit-nvme
+
+repos:
+  bitbake:
+    url: https://github.com/openembedded/bitbake.git
+    branch: 2.18
+    layers: {}
+
+  core:
+    url: https://github.com/openembedded/openembedded-core.git
+    layers:
+      meta:
+
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded.git
+    # idk if we need all these yet
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-multimedia:
+
+  meta-clang:
+    url: https://github.com/kraj/meta-clang.git
+
+  meta-flutter:
+    url: https://github.com/meta-flutter/meta-flutter.git
+    layers:
+      meta-flutter-apps:
+
+  meta-tegra:
+    url: https://github.com/OE4T/meta-tegra.git
+
+local_conf_header:
+  all: |
+    BB_NUMBER_THREAD = "4"
+    PARALLEL_MAKE = "-j 4"
+    IMAGE_INSTALL:append = " flutter-engine flutter-pi dimos-app "
+    DISTRO_FEATURES:append = " opengl "
+
